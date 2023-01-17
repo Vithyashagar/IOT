@@ -1,0 +1,372 @@
+[
+    {
+        "id": "f89a59279f6b93e0",
+        "type": "tab",
+        "label": "IOTBDA",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "7e22b984ebd688cf",
+        "type": "inject",
+        "z": "f89a59279f6b93e0",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "5",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "0.10.1",
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 100,
+        "y": 160,
+        "wires": [
+            [
+                "72f42e80e7c5cd46"
+            ]
+        ]
+    },
+    {
+        "id": "72f42e80e7c5cd46",
+        "type": "rpi-dht22",
+        "z": "f89a59279f6b93e0",
+        "name": "",
+        "topic": "rpi-dht22",
+        "dht": "11",
+        "pintype": "0",
+        "pin": "23",
+        "x": 120,
+        "y": 300,
+        "wires": [
+            [
+                "c28af3cdabc00669",
+                "4afc5ed71ad0f0d4"
+            ]
+        ]
+    },
+    {
+        "id": "c28af3cdabc00669",
+        "type": "function",
+        "z": "f89a59279f6b93e0",
+        "name": "Temperature Data",
+        "func": "msg.payload = parseFloat(msg.payload);\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 310,
+        "y": 260,
+        "wires": [
+            [
+                "872e510573f3c3d7"
+            ]
+        ]
+    },
+    {
+        "id": "872e510573f3c3d7",
+        "type": "function",
+        "z": "f89a59279f6b93e0",
+        "name": "B",
+        "func": "writeValue = msg.payload;\n\nmsg.payload = {\n    \"metrics\":[{\n        \"name\":'Temperature',\n        \"alias\":22,\n        \"datatype\":9,\n        \"isNull\":false,\n        \"floatValue\": writeValue\n    }],\n    \"seq\":-1\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 140,
+        "wires": [
+            [
+                "751807a718237cf5",
+                "d0c57072b047846d",
+                "b13bc2ba58d6099c"
+            ]
+        ]
+    },
+    {
+        "id": "751807a718237cf5",
+        "type": "debug",
+        "z": "f89a59279f6b93e0",
+        "name": "msg1",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 570,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "4afc5ed71ad0f0d4",
+        "type": "function",
+        "z": "f89a59279f6b93e0",
+        "name": "Humidity Data",
+        "func": "msg.payload = msg.humidity;\nmsg.payload = parseFloat(msg.payload);\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 300,
+        "y": 340,
+        "wires": [
+            [
+                "feae599a2b973771"
+            ]
+        ]
+    },
+    {
+        "id": "feae599a2b973771",
+        "type": "function",
+        "z": "f89a59279f6b93e0",
+        "name": "A",
+        "func": "writeValue = msg.payload;\n\nmsg.payload = {\n    \"metrics\":[{\n        \"name\":'Humidity',\n        \"alias\":22,\n        \"datatype\":9,\n        \"isNull\":false,\n        \"floatValue\": writeValue\n    }],\n    \"seq\":-1\n};\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 370,
+        "y": 440,
+        "wires": [
+            [
+                "b9f532e5d838f260",
+                "94163a308b648ad4",
+                "c456d9e5aabb7a71"
+            ]
+        ]
+    },
+    {
+        "id": "94163a308b648ad4",
+        "type": "debug",
+        "z": "f89a59279f6b93e0",
+        "name": "msg2",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 570,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "b9f532e5d838f260",
+        "type": "mqtt out",
+        "z": "f89a59279f6b93e0",
+        "name": "publishHumidity",
+        "topic": "Temp/DDATA/pi/Temp",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "aa77db5c0b976fd0",
+        "x": 600,
+        "y": 340,
+        "wires": []
+    },
+    {
+        "id": "d0c57072b047846d",
+        "type": "mqtt out",
+        "z": "f89a59279f6b93e0",
+        "name": "publishTemp",
+        "topic": "Temp/DDATA/pi/Humidity",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "aa77db5c0b976fd0",
+        "x": 590,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "b13bc2ba58d6099c",
+        "type": "mqtt out",
+        "z": "f89a59279f6b93e0",
+        "name": "Temperature",
+        "topic": "Temp",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "52e9024ded8f9d90",
+        "x": 750,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "f7102b8e109a646a",
+        "type": "mqtt in",
+        "z": "f89a59279f6b93e0",
+        "name": "Temperature Out",
+        "topic": "Temp",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "52e9024ded8f9d90",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 340,
+        "y": 580,
+        "wires": [
+            [
+                "b3806daea039c54e"
+            ]
+        ]
+    },
+    {
+        "id": "c456d9e5aabb7a71",
+        "type": "mqtt out",
+        "z": "f89a59279f6b93e0",
+        "name": "Humidity",
+        "topic": "Humidity",
+        "qos": "",
+        "retain": "",
+        "respTopic": "",
+        "contentType": "",
+        "userProps": "",
+        "correl": "",
+        "expiry": "",
+        "broker": "52e9024ded8f9d90",
+        "x": 760,
+        "y": 380,
+        "wires": []
+    },
+    {
+        "id": "9a110aafe20e50a5",
+        "type": "mqtt in",
+        "z": "f89a59279f6b93e0",
+        "name": "Humidity Out",
+        "topic": "Humidity",
+        "qos": "2",
+        "datatype": "auto",
+        "broker": "52e9024ded8f9d90",
+        "nl": false,
+        "rap": true,
+        "rh": 0,
+        "inputs": 0,
+        "x": 330,
+        "y": 660,
+        "wires": [
+            [
+                "db340202f980224d"
+            ]
+        ]
+    },
+    {
+        "id": "b3806daea039c54e",
+        "type": "debug",
+        "z": "f89a59279f6b93e0",
+        "name": "Temperature Output",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 630,
+        "y": 580,
+        "wires": []
+    },
+    {
+        "id": "db340202f980224d",
+        "type": "debug",
+        "z": "f89a59279f6b93e0",
+        "name": "Humidity Output",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 600,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "aa77db5c0b976fd0",
+        "type": "mqtt-broker",
+        "name": "hive MQ",
+        "broker": "0fee469dc8a844ffbd82d9a7ffe0b5fe.s1.eu.hivemq.cloud",
+        "port": "8884",
+        "tls": "",
+        "clientid": "Temp Sense",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "sessionExpiry": ""
+    },
+    {
+        "id": "52e9024ded8f9d90",
+        "type": "mqtt-broker",
+        "name": "mosquitto",
+        "broker": "test.mosquitto.org",
+        "port": "1883",
+        "clientid": "",
+        "autoConnect": true,
+        "usetls": false,
+        "protocolVersion": "4",
+        "keepalive": "60",
+        "cleansession": true,
+        "birthTopic": "",
+        "birthQos": "0",
+        "birthPayload": "",
+        "birthMsg": {},
+        "closeTopic": "",
+        "closeQos": "0",
+        "closePayload": "",
+        "closeMsg": {},
+        "willTopic": "",
+        "willQos": "0",
+        "willPayload": "",
+        "willMsg": {},
+        "sessionExpiry": ""
+    }
+]

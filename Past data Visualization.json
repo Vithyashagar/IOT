@@ -1,0 +1,192 @@
+[
+    {
+        "id": "f9cac1dd7c823910",
+        "type": "tab",
+        "label": "Past data",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "e3d6e1f0e105576f",
+        "type": "function",
+        "z": "f9cac1dd7c823910",
+        "name": "generateGraph",
+        "func": "\n\n\n//generate chart\nvar payload = msg.payload\nvar data_out = [];\nvar a1 = [];\nvar a2 = [];\n\n\nfunction toTimestamp(strDate){\n    var datum = Date.parse(strDate);\n    return datum\n}\n\nfor(let i = 0 ; i < payload.length ; i++){\n    var p = payload[i].dt\n    a1.push(payload[i][\"AverageTemperature\"]);\n    a2.push(p)\n    \n}\ndata_out = [a1];\nmsg.payload = [{\n    \"series\" : [\"Temperature\"],\n    \"data\": [a1],\n    \"labels\": a2\n    \n}];\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 740,
+        "y": 340,
+        "wires": [
+            [
+                "7548ad450c4dfc6c",
+                "c548b95702b170c6"
+            ]
+        ]
+    },
+    {
+        "id": "2913f478cdbc59c2",
+        "type": "csv",
+        "z": "f9cac1dd7c823910",
+        "name": "",
+        "sep": ",",
+        "hdrin": true,
+        "hdrout": "none",
+        "multi": "mult",
+        "ret": "\\n",
+        "temp": "",
+        "skip": "0",
+        "strings": true,
+        "include_empty_strings": "",
+        "include_null_values": "",
+        "x": 770,
+        "y": 160,
+        "wires": [
+            [
+                "e3d6e1f0e105576f",
+                "c548b95702b170c6"
+            ]
+        ]
+    },
+    {
+        "id": "084fe0e2bbc87713",
+        "type": "file in",
+        "z": "f9cac1dd7c823910",
+        "name": "",
+        "filename": "C:\\Users\\MSI GAMING\\Tempdata.csv",
+        "format": "utf8",
+        "chunk": false,
+        "sendError": false,
+        "encoding": "none",
+        "allProps": false,
+        "x": 590,
+        "y": 80,
+        "wires": [
+            [
+                "2913f478cdbc59c2",
+                "c548b95702b170c6"
+            ]
+        ]
+    },
+    {
+        "id": "7548ad450c4dfc6c",
+        "type": "ui_chart",
+        "z": "f9cac1dd7c823910",
+        "name": "Past Data",
+        "group": "fe9b4de4.dcd72",
+        "order": 2,
+        "width": 18,
+        "height": 6,
+        "label": "Past Data Variation",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "Y-M-D",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "20",
+        "ymax": "34",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "86400",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 900,
+        "y": 380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c548b95702b170c6",
+        "type": "debug",
+        "z": "f9cac1dd7c823910",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 990,
+        "y": 160,
+        "wires": []
+    },
+    {
+        "id": "457e4d2810f152f5",
+        "type": "inject",
+        "z": "f9cac1dd7c823910",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 340,
+        "y": 40,
+        "wires": [
+            [
+                "084fe0e2bbc87713"
+            ]
+        ]
+    },
+    {
+        "id": "7aa51ce7f7e70568",
+        "type": "ui_spacer",
+        "z": "f9cac1dd7c823910",
+        "name": "spacer",
+        "group": "",
+        "order": 1,
+        "width": 25,
+        "height": 1
+    },
+    {
+        "id": "fe9b4de4.dcd72",
+        "type": "ui_group",
+        "name": "Name list",
+        "tab": "da612906.998368",
+        "order": 1,
+        "disp": true,
+        "width": "15",
+        "collapse": false
+    },
+    {
+        "id": "da612906.998368",
+        "type": "ui_tab",
+        "name": "Main-PC",
+        "icon": "dashboard",
+        "disabled": false,
+        "hidden": false
+    }
+]

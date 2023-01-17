@@ -1,0 +1,66 @@
+[
+    {
+        "id": "a946ab89f82694f8",
+        "type": "ui_chart",
+        "z": "267af98e9e90733a",
+        "name": "",
+        "group": "a541683033b29f63",
+        "order": 3,
+        "width": 8,
+        "height": 9,
+        "label": "Current Temperature ",
+        "chartType": "line",
+        "legend": "false",
+        "xformat": "HH:mm:ss",
+        "interpolate": "linear",
+        "nodata": "",
+        "dot": false,
+        "ymin": "",
+        "ymax": "",
+        "removeOlder": 1,
+        "removeOlderPoints": "",
+        "removeOlderUnit": "3600",
+        "cutout": 0,
+        "useOneColor": false,
+        "useUTC": false,
+        "colors": [
+            "#1f77b4",
+            "#aec7e8",
+            "#ff7f0e",
+            "#2ca02c",
+            "#98df8a",
+            "#d62728",
+            "#ff9896",
+            "#9467bd",
+            "#c5b0d5"
+        ],
+        "outputs": 1,
+        "useDifferentColor": false,
+        "className": "",
+        "x": 440,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "a541683033b29f63",
+        "type": "ui_group",
+        "name": "TemperatureFuturePrediction",
+        "tab": "076cdd249ccf2a1b",
+        "order": 1,
+        "disp": true,
+        "width": 23,
+        "collapse": false,
+        "className": ""
+    },
+    {
+        "id": "076cdd249ccf2a1b",
+        "type": "ui_tab",
+        "name": "TemperatureFuturePrediction",
+        "icon": "dashboard",
+        "order": 1,
+        "disabled": false,
+        "hidden": false
+    }
+]

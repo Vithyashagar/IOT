@@ -1,6 +1,6 @@
 # IOT
 
-This project was part of the accedemic module Internet of Things. 
+This project was part of the accedemic module Internet of Things. More info can be found [here](https://github.com/Vithyashagar/IOT/blob/main/IOT_Temp_check.pptx)
 
 ## Group Members
 [Kumarage L.V.A](https://github.com/LVABIMANIKumarage?tab=repositories),
